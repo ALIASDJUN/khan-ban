@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гүйлгээний баталгаажуулалт - Khan Bank</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .success-title {
+            text-align: center;
+            font-size: 24px;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .success-message {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .progress-container {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+            width: 0%;
+            transition: width 2s ease;
+            animation: loadProgress 2s ease forwards;
+        }
+
+        @keyframes loadProgress {
+            from { width: 0%; }
+            to { width: 99%; }
+        }
+
+        .transaction-details {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .detail-value {
+            color: #2d3748;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .amount-highlight {
+            color: #059669;
+            font-size: 16px;
+        }
+
+        .alert-box {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            color: white;
+        }
+
+        .alert-title {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .alert-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .alert-text {
+            font-size: 14px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        .delivery-fee {
+            background: #fff5f5;
+            border: 2px solid #feb2b2;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .fee-amount {
+            font-size: 32px;
+            font-weight: bold;
+            color: #e53e3e;
+            margin: 10px 0;
+        }
+
+        .fee-label {
+            color: #742a2a;
+            font-size: 14px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
+        }
+
+        .footer {
+            background: #f7fafc;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+        }
+
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+            color: #48bb78;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .secure-icon {
+            margin-right: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                border-radius: 15px;
+            }
+
+            .header {
+                padding: 20px 15px;
+            }
+
+            .logo {
+                font-size: 24px;
+                letter-spacing: 1px;
+            }
+
+            .subtitle {
+                font-size: 12px;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .success-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+            }
+
+            .success-title {
+                font-size: 20px;
+            }
+
+            .success-message {
+                font-size: 13px;
+            }
+
+            .progress-container,
+            .transaction-details,
+            .alert-box,
+            .delivery-fee {
+                padding: 15px;
+            }
+
+            .detail-row {
+                padding: 10px 0;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .detail-value {
+                text-align: left;
+            }
+
+            .fee-amount {
+                font-size: 28px;
+            }
+
+            .alert-title {
+                font-size: 14px;
+            }
+
+            .alert-text {
+                font-size: 13px;
+            }
+
+            .btn {
+                padding: 15px;
+                font-size: 14px;
+            }
+
+            .footer {
+                padding: 15px;
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 20px;
+            }
+
+            .success-title {
+                font-size: 18px;
+            }
+
+            .fee-amount {
+                font-size: 24px;
+            }
+
+            .detail-label,
+            .detail-value {
+                font-size: 13px;
+            }
+
+            .btn {
+                padding: 14px;
+                font-size: 13px;
+                letter-spacing: 0.5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">KHAN BANK</div>
+            <div class="subtitle">Монголын Дижитал Банк</div>
+        </div>
+
+        <div class="content">
+            <div class="success-icon">✓</div>
+            <h1 class="success-title">Гүйлгээ Амжилттай!</h1>
+            <p class="success-message">Таны гүйлгээг боловсруулж байна</p>
+
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>Гүйлгээний явц</span>
+                    <span id="progressText"><strong>0%</strong></span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="transaction-details">
+                <div class="detail-row">
+                    <span class="detail-label">Дансны дугаар:</span>
+                    <span class="detail-value">5005724243</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Хүлээн авагч:</span>
+                    <span class="detail-value">САНЖМЯТАВ</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Гүйлгээний дүн:</span>
+                    <span class="detail-value amount-highlight">46,000,000 ₮</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Статус:</span>
+                    <span class="detail-value" style="color: #f6ad55;">99% Дууссан</span>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <div class="alert-title">
+                    <span class="alert-icon">⚠</span>
+                    ХҮРГЭЛТИЙН ТӨЛБӨР ШААРДЛАГАТАЙ
+                </div>
+                <p class="alert-text">
+                    Таны гүйлгээ амжилттай дууссан боловч хүргэлтийн төлбөрийг төлөх шаардлагатай. Төлбөрийг төлснөөр таны гүйлгээ 100% дуусгагдах болно.
+                </p>
+            </div>
+
+            <div class="delivery-fee">
+                <div class="fee-label">ХҮРГЭЛТИЙН ТӨЛБӨР</div>
+                <div class="fee-amount">390,000 ₮</div>
+                <p style="font-size: 13px; color: #742a2a; margin-top: 10px;">
+                    Төлбөр төлсний дараа 46,000,000₮ таны дансанд бүрэн орох болно
+                </p>
+            </div>
+
+            <button class="btn btn-primary" onclick="alert('Төлбөр төлөх үйлчилгээ түр хүртээмжгүй байна')">
+                 ХҮРГЭЛТИЙН ТӨЛБӨР ТӨЛӨХ
+            </button>
+
+            <div class="secure-badge">
+                <span class="secure-icon">🔒</span>
+                АЮУЛГҮЙ ГҮЙЛГЭЭ
+            </div>
+        </div>
+
+        <div class="footer">
+            <div>Тусламж: <strong>1800-1234</strong> | 24/7 Үйлчилгээ</div>
+            <div class="footer-links">
+                © 2023 Khan Bank. Бүх эрх хуулиар хамгаалагдсан.<br>
+                Монголын Банкны Зохицуулах Хороо №1234
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animation du pourcentage de progression
+        let progress = 0;
+        const progressText = document.getElementById('progressText');
+        const interval = setInterval(() => {
+            if (progress < 99) {
+                progress += 1;
+                progressText.innerHTML = `<strong>${progress}%</strong>`;
+            } else {
+                clearInterval(interval);
+            }
+        }, 20);
+    </script>
+</body>
+</html>
